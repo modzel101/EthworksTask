@@ -25,9 +25,16 @@ public class Expression {
     public String toString() {
         String sExpr = "";
         for (Double key: this.expr.keySet()) {
+            //constant not 0
             if (!this.expr.get(key).equals(0.0))
-                if (!key.equals(0.0))
-                    sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x^" + expToString(key));
+                //exponent not 0
+                if (!key.equals(0.0)) {
+                    //exponent == 1
+                    if (key.equals(1.0))
+                        sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x");
+                    else
+                        sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x^" + expToString(key));
+                }
                 else
                     sExpr = sExpr.concat(constToString(this.expr.get(key)));
         }
@@ -50,9 +57,15 @@ public class Expression {
     private String constToString(Double d) {
         if (d.intValue() == d) {
             if (d < 0)
-                return String.valueOf(d.intValue());
+                if(d.intValue() == -1)
+                    return "-";
+                else
+                    return String.valueOf(d.intValue());
             else
-                return "+" + d.intValue();
+                if (d.intValue() == 1)
+                    return "+";
+                else
+                    return "+" + d.intValue();
         }
         else {
             if (d < 0)
