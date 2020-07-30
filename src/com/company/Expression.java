@@ -7,9 +7,10 @@ public class Expression {
     private List<Double> exponent;
     private Map<Double, Double> expr;
 
-    Expression() {
-        this.constant = new ArrayList<>();
-        this.exponent = new ArrayList<>();
+    Expression(Expression exp) {
+        this.constant = exp.constant;
+        this.exponent = exp.exponent;
+        this.expr = exp.expr;
     }
 
     Expression(List<Double> constant, List<Double> exponent) throws Exception {
@@ -20,12 +21,9 @@ public class Expression {
         this.expr = this.simplify();
     }
 
-
     @Override
     public String toString() {
         String sExpr = "";
-        int expLength = this.expr.size();
-        System.out.println(expLength);
         for (Double key: this.expr.keySet()) {
             sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x^" + expToString(key));
         }
@@ -66,5 +64,9 @@ public class Expression {
             return String.valueOf(d.intValue());
         else
             return String.valueOf(d);
+    }
+
+    public Map<Double, Double> getExpr() {
+        return this.expr;
     }
 }
