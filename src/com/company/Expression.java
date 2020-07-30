@@ -25,7 +25,11 @@ public class Expression {
     public String toString() {
         String sExpr = "";
         for (Double key: this.expr.keySet()) {
-            sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x^" + expToString(key));
+            if (!this.expr.get(key).equals(0.0))
+                if (!key.equals(0.0))
+                    sExpr = sExpr.concat(constToString(this.expr.get(key)) + "x^" + expToString(key));
+                else
+                    sExpr = sExpr.concat(constToString(this.expr.get(key)));
         }
         return sExpr.substring(1);
     }
@@ -40,8 +44,7 @@ public class Expression {
                 simplified.put(this.exponent.get(i), simplified.get(this.exponent.get(i)) + this.constant.get(i));
         }
         TreeMap<Double, Double> sortedMap = new TreeMap<Double, Double>(simplified);
-        NavigableMap<Double, Double> reveresedTreeMap = sortedMap.descendingMap();
-        return reveresedTreeMap;
+        return sortedMap.descendingMap();
     }
 
     private String constToString(Double d) {
